@@ -27,14 +27,30 @@ class BinaryTree:
         
     def _recorrido_preorden(self,node:nodo):
         if node is not None:
-            print(node.element)
+            print(node.element,end=' ')
             self._recorrido_preorden(node.left)
             self._recorrido_preorden(node.right)
-    
     def imprimir_preorden(self):
         self._recorrido_preorden(self.root)
+    
+    def _recorrido_inorden(self,node:nodo):
+        if node is not None:
+            self._recorrido_inorden(node.left)
+            print(node.element,end=' ')
+            self._recorrido_inorden(node.right)
+    def imprimir_inorden(self):
+        self._recorrido_inorden(self.root)
+    
         
     def add(self,element,parent=None) -> None:
+        """Este método agrega un nodo al árbol
+
+        :param element: elemento a gregar
+        :type element: any
+        :param parent: padre de dicho nodo, defaults to None
+        :type parent: any, optional
+        :raises Exception: si el nodo que se señala como padre ya tiene 2 hijos o no existe
+        """
         new_nodo=nodo(element)
         if self.weight==0:
             self.root=new_nodo
@@ -43,7 +59,7 @@ class BinaryTree:
         else:
             father=self.search(parent,self.root)
             if not(father):
-                raise 'El nodo padre indicado no existe'
+                raise Exception('El nodo padre indicado no existe')
             if father.left is None:
                 father.left=new_nodo
             elif father.right is None:
@@ -61,4 +77,9 @@ if __name__=='__main__':
     a1.add(7,2)
     a1.add(5,2)
     a1.add(1,3)
+    a1.add(20,3)
+    print('recorrido en preorden :',end=' ')
     a1.imprimir_preorden()
+    print()
+    print('recorrido en inorden :',end=' ')
+    a1.imprimir_inorden()
